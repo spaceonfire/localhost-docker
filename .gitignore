@@ -1,0 +1,28 @@
+### Miscellaneous
+.Spotlight-V100
+.Trashes
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Thumbs.db
+
+### Composer
+composer.lock
+/vendor/
+
+### IDE
+.idea/
+*.cache
+
+volumes/conf.d/*
+
+### nginx-proxy
+volumes/certs/*
+!volumes/certs/.gitkeep
+
+volumes/conf.d/*
+!volumes/conf.d/.gitkeep
+!volumes/conf.d/custom-params.conf
+
+volumes/vhost.d/*
+!volumes/vhost.d/.gitkeep
