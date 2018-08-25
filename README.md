@@ -21,6 +21,28 @@
     docker-compose up -d
     ```
 
+## Решение проблем
+
+### Не монтируется Docker сокер на Windows
+
+При запуске прокси на Windwos может возникнуть ошибка монтирования Docker сокета:
+
+```
+Cannot create container for service: b'Mount denied:\nThe source path "\\\\var\\\\run\\\\docker.sock:/var/run/docker.sock"\nis not a valid Windows path'
+```
+
+Для этого необходимо определить переменную окружения `COMPOSE_CONVERT_WINDOWS_PATHS` в значение `1`. Это можно сделать командой в консоли:
+
+```cmd
+// CMD
+set COMPOSE_CONVERT_WINDOWS_PATHS=1
+
+// Powershell
+$Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
+```
+
+Или глобально через "Панель управления" (Панель управления\Система и безопасность\Система\Дополнительные параметры системы\Переменные среды)
+
 ### Подключить проект к прокси
 
 В конфиге проекта `docker-compose.yml` указать сеть `proxy`:
