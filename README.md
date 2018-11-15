@@ -1,25 +1,34 @@
-# Nginx proxy for Docker containers
+# Localhost Docker
 
-Вдохновлено [pixelfordinner/pixelcloud-docker-apps](https://github.com/pixelfordinner/pixelcloud-docker-apps)
+Localhost Docker позволяет развернуть окружение для разработки веб-приложений.
+
+## Начало работы
+
+1. Создать сеть `localhost` на хосте
+
+    ```bash
+    docker network create localhost
+    ```
+
+1. Запустить сервисы
+
+    ```bash
+    docker-compose \
+        -f docker-compose.yml \
+        -f proxy.yml \
+        -f mysql.yml \
+        -f mailcatcher.yml \
+        up -d
+    ```
+
+## Компоненты
+
+### Nginx Proxy
 
 Простой Nginx прокси для Docker. Можно использовать для локальной разработки. Запускает контейнеры:
 
 1. **[`nginx`](https://hub.docker.com/_/nginx/)** - Связывает порты 80 и 443 с хоста в контейнер, таким образом обрабатывает запросы, приходящие на хост.
 1. **[`jwilder/docker-gen`](https://github.com/jwilder/docker-gen)** - Регенерирует конфиг для nginx при запуске/остановке контейнеров.
-
-## Начало работы
-
-1. Создать сеть `proxy` на хосте
-
-    ```bash
-    docker network create proxy
-    ```
-
-1. Запустить эти контейнеры
-
-    ```bash
-    docker-compose up -d
-    ```
 
 ## Решение проблем
 
@@ -45,17 +54,18 @@ $Env:COMPOSE_CONVERT_WINDOWS_PATHS=1
 
 ### Подключить проект к прокси
 
-В конфиге проекта `docker-compose.yml` указать сеть `proxy`:
+В конфиге проекта `docker-compose.yml` указать сеть `localhost`:
 
 ```yml
 networks:
-  proxy:
+  localhost:
     external: true
 ```
 
 Для контейнера с веб-сервером (nginx, apache) в переменные окружения указать:
 
 - VIRTUAL_HOST=hostname
+- VIRTUAL_PORT=8080
 
 Можно указать несколько доменов через запятую.
 
@@ -66,11 +76,11 @@ networks:
 ```yml
 networks:
   - default
-  - proxy-tier
+  - localhost
 ```
 
 `default` - чтобы для доступа к контейнерам в сети проекта
-`proxy-tier` - для участия в прокси
+`localhost` - для участия в прокси
 
 ## SSL на Localhost
 

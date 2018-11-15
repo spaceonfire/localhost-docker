@@ -1,10 +1,10 @@
-version: "3"
+version: '3'
 
 services:
   nginx:
-    image: nginx:${NGINX_VER:-1.13}
-    container_name: docker-proxy-nginx
-    restart: unless-stopped
+    image: nginx:${NGINX_VER:-1.15}
+    container_name: ld-proxy-nginx
+    restart: always
     ports:
       - 80:80
       - 443:443
@@ -12,26 +12,21 @@ services:
       - ./volumes/conf.d:/etc/nginx/conf.d:ro
       - ./volumes/vhost.d:/etc/nginx/vhost.d:ro
       - ./volumes/certs:/etc/nginx/certs:ro
-      - /usr/share/nginx/html
     networks:
-      - proxy
+      - localhost
 
   docker-gen:
     image: jwilder/docker-gen:${DOCKER_GEN_VER:-0.7.3}
-    container_name: docker-proxy-docker_gen
-    restart: unless-stopped
+    container_name: ld-proxy-gen
+    restart: always
     depends_on:
       - nginx
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./data/templates:/etc/docker-gen/templates:ro
+      - ./templates:/etc/docker-gen/templates:ro
       - ./volumes/conf.d:/etc/nginx/conf.d:rw
       - ./volumes/vhost.d:/etc/nginx/vhost.d:ro
       - ./volumes/certs:/etc/nginx/certs:ro
     networks:
-      - proxy
-    entrypoint: /usr/local/bin/docker-gen -notify-sighup docker-proxy-nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
-
-networks:
-  proxy:
-    external: true
+      - localhost
+    entrypoint: /usr/local/bin/docker-gen -notify-sighup ld-proxy-nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
