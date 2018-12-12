@@ -32,9 +32,9 @@ Localhost Docker позволяет развернуть окружение дл
 
 ## Решение проблем
 
-### Не монтируется Docker сокер на Windows
+### Не монтируется Docker сокет на Windows
 
-При запуске прокси на Windwos может возникнуть ошибка монтирования Docker сокета:
+При запуске прокси на Windows может возникнуть ошибка монтирования Docker сокета:
 
 ```
 Cannot create container for service: b'Mount denied:\nThe source path "\\\\var\\\\run\\\\docker.sock:/var/run/docker.sock"\nis not a valid Windows path'
