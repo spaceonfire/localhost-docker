@@ -8,6 +8,3 @@ services:
     - VIRTUAL_HOST=${MAILCATCHER_VIRTUAL_HOST:-mail.docker.local}
     networks:
     - localhost
-
-volumes:
-  mysql:
