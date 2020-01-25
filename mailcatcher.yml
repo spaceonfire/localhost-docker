@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mailcatcher:
-    image: tophfr/mailcatcher:0.6.5
+    image: tophfr/mailcatcher:${MAILCATCHER_VER:-0.7.1}
     restart: always
     environment:
     - VIRTUAL_HOST=${MAILCATCHER_VIRTUAL_HOST:-mail.docker.local}
