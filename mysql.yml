@@ -12,7 +12,7 @@ services:
     - localhost
 
   adminer:
-    image: adminer:4.6
+    image: adminer:${ADMINER_VER:-4.7}
     restart: always
     environment:
     - VIRTUAL_HOST=${ADMINER_VIRTUAL_HOST:-mysql.docker.local}
