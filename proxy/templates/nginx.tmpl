@@ -1,3 +1,7 @@
+{{ if (exists "/etc/nginx/includes/http.conf") }}
+include /etc/nginx/includes/http.conf;
+{{ end }}
+
 {{ $CurrentContainer := where $ "ID" .Docker.CurrentContainerID | first }}
 
 {{ define "upstream" }}
@@ -156,10 +160,10 @@ server {
 	listen [::]:80 {{ $default_server }};
 	access_log /var/log/nginx/access.log vhost;
 
-	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
-	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
-	{{ else if (exists "/etc/nginx/vhost.d/default") }}
-	include /etc/nginx/vhost.d/default;
+	{{ if (exists (printf "/etc/nginx/includes/%s" $host)) }}
+	include {{ printf "/etc/nginx/includes/%s" $host }};
+	{{ else if (exists "/etc/nginx/includes/default") }}
+	include /etc/nginx/includes/default;
 	{{ end }}
 
 	return 301 https://$host$request_uri;
@@ -182,10 +186,10 @@ server {
 	{{ end }}
 
 
-	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
-	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
-	{{ else if (exists "/etc/nginx/vhost.d/default") }}
-	include /etc/nginx/vhost.d/default;
+	{{ if (exists (printf "/etc/nginx/includes/%s" $host)) }}
+	include {{ printf "/etc/nginx/includes/%s" $host }};
+	{{ else if (exists "/etc/nginx/includes/default") }}
+	include /etc/nginx/includes/default;
 	{{ end }}
 
 	location / {
@@ -199,10 +203,10 @@ server {
 		auth_basic	"Restricted {{ $host }}";
 		auth_basic_user_file	{{ (printf "/etc/nginx/htpasswd/%s" $host) }};
 		{{ end }}
-								{{ if (exists (printf "/etc/nginx/vhost.d/%s_location" $host)) }}
-								include {{ printf "/etc/nginx/vhost.d/%s_location" $host}};
-								{{ else if (exists "/etc/nginx/vhost.d/default_location") }}
-								include /etc/nginx/vhost.d/default_location;
+								{{ if (exists (printf "/etc/nginx/includes/%s_location" $host)) }}
+								include {{ printf "/etc/nginx/includes/%s_location" $host}};
+								{{ else if (exists "/etc/nginx/includes/default_location") }}
+								include /etc/nginx/includes/default_location;
 								{{ end }}
 	}
 }
@@ -217,10 +221,10 @@ server {
 		listen [::]:80 {{ $default_server }};
 		access_log /var/log/nginx/access.log vhost;
 
-		{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
-		include {{ printf "/etc/nginx/vhost.d/%s" $host }};
-		{{ else if (exists "/etc/nginx/vhost.d/default") }}
-		include /etc/nginx/vhost.d/default;
+		{{ if (exists (printf "/etc/nginx/includes/%s" $host)) }}
+		include {{ printf "/etc/nginx/includes/%s" $host }};
+		{{ else if (exists "/etc/nginx/includes/default") }}
+		include /etc/nginx/includes/default;
 		{{ end }}
 
 		return 301 https://{{$host}}$request_uri;
@@ -297,10 +301,10 @@ server {
 	listen [::]:80 {{ $default_server }};
 	access_log /var/log/nginx/access.log vhost;
 
-	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
-	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
-	{{ else if (exists "/etc/nginx/vhost.d/default") }}
-	include /etc/nginx/vhost.d/default;
+	{{ if (exists (printf "/etc/nginx/includes/%s" $host)) }}
+	include {{ printf "/etc/nginx/includes/%s" $host }};
+	{{ else if (exists "/etc/nginx/includes/default") }}
+	include /etc/nginx/includes/default;
 	{{ end }}
 
 	location / {
@@ -314,10 +318,10 @@ server {
 		auth_basic	"Restricted {{ $host }}";
 		auth_basic_user_file	{{ (printf "/etc/nginx/htpasswd/%s" $host) }};
 		{{ end }}
-								{{ if (exists (printf "/etc/nginx/vhost.d/%s_location" $host)) }}
-								include {{ printf "/etc/nginx/vhost.d/%s_location" $host}};
-								{{ else if (exists "/etc/nginx/vhost.d/default_location") }}
-								include /etc/nginx/vhost.d/default_location;
+								{{ if (exists (printf "/etc/nginx/includes/%s_location" $host)) }}
+								include {{ printf "/etc/nginx/includes/%s_location" $host}};
+								{{ else if (exists "/etc/nginx/includes/default_location") }}
+								include /etc/nginx/includes/default_location;
 								{{ end }}
 	}
 }
@@ -330,10 +334,10 @@ server {
 	listen [::]:80 {{ $default_server }};
 	access_log /var/log/nginx/access.log vhost;
 
-	{{ if (exists (printf "/etc/nginx/vhost.d/www.%s" $host)) }}
-	include {{ printf "/etc/nginx/vhost.d/www.%s" $host }};
-	{{ else if (exists "/etc/nginx/vhost.d/default") }}
-	include /etc/nginx/vhost.d/default;
+	{{ if (exists (printf "/etc/nginx/includes/www.%s" $host)) }}
+	include {{ printf "/etc/nginx/includes/www.%s" $host }};
+	{{ else if (exists "/etc/nginx/includes/default") }}
+	include /etc/nginx/includes/default;
 	{{ end }}
 
 	location / {
@@ -347,10 +351,10 @@ server {
 		auth_basic	"Restricted {{ $host }}";
 		auth_basic_user_file	{{ (printf "/etc/nginx/htpasswd/www.%s" $host) }};
 		{{ end }}
-								{{ if (exists (printf "/etc/nginx/vhost.d/www.%s_location" $host)) }}
-								include {{ printf "/etc/nginx/vhost.d/www.%s_location" $host}};
-								{{ else if (exists "/etc/nginx/vhost.d/default_location") }}
-								include /etc/nginx/vhost.d/default_location;
+								{{ if (exists (printf "/etc/nginx/includes/www.%s_location" $host)) }}
+								include {{ printf "/etc/nginx/includes/www.%s_location" $host}};
+								{{ else if (exists "/etc/nginx/includes/default_location") }}
+								include /etc/nginx/includes/default_location;
 								{{ end }}
 	}
 }
@@ -365,10 +369,10 @@ server {
 	listen [::]:80 {{ $default_server }};
 	access_log /var/log/nginx/access.log vhost;
 
-	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $nowwwhost)) }}
-	include {{ printf "/etc/nginx/vhost.d/%s" $nowwwhost }};
-	{{ else if (exists "/etc/nginx/vhost.d/default") }}
-	include /etc/nginx/vhost.d/default;
+	{{ if (exists (printf "/etc/nginx/includes/%s" $nowwwhost)) }}
+	include {{ printf "/etc/nginx/includes/%s" $nowwwhost }};
+	{{ else if (exists "/etc/nginx/includes/default") }}
+	include /etc/nginx/includes/default;
 	{{ end }}
 
 	location / {
@@ -382,10 +386,10 @@ server {
 		auth_basic	"Restricted {{ $nowwwhost }}";
 		auth_basic_user_file	{{ (printf "/etc/nginx/htpasswd/%s" $nowwwhost) }};
 		{{ end }}
-								{{ if (exists (printf "/etc/nginx/vhost.d/%s_location" $nowwwhost)) }}
-								include {{ printf "/etc/nginx/vhost.d/%s_location" $nowwwhost}};
-								{{ else if (exists "/etc/nginx/vhost.d/default_location") }}
-								include /etc/nginx/vhost.d/default_location;
+								{{ if (exists (printf "/etc/nginx/includes/%s_location" $nowwwhost)) }}
+								include {{ printf "/etc/nginx/includes/%s_location" $nowwwhost}};
+								{{ else if (exists "/etc/nginx/includes/default_location") }}
+								include /etc/nginx/includes/default_location;
 								{{ end }}
 	}
 }

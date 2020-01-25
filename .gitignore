@@ -43,14 +43,3 @@ nbproject
 .directory
 *.sql
 *.tar*
-
-### nginx-proxy
-volumes/certs/*
-!volumes/certs/.gitkeep
-
-volumes/conf.d/*
-!volumes/conf.d/.gitkeep
-!volumes/conf.d/custom-params.conf
-
-volumes/vhost.d/*
-!volumes/vhost.d/.gitkeep
