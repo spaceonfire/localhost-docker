@@ -82,6 +82,29 @@ networks:
 `default` - чтобы для доступа к контейнерам в сети проекта
 `localhost` - для участия в прокси
 
+### docker-gen не генерирует конфиг и постоянно перезапускается
+
+Такая ошибка встречалась на Windows при монтировании директории с ntfs диска. Чтобы это исправить можно монтировать вместо
+директории docker-том. Для этого в `docker-compose.override.yml` прописать:
+
+```yml
+version: '3'
+
+services:
+  nginx:
+    volumes:
+      - nginx:/etc/nginx/conf.d:ro
+
+  docker-gen:
+    volumes:
+      - nginx:/etc/nginx/conf.d:ro
+
+volumes:
+  nginx:
+```
+
+Запускать сервисы вместе с указанием файла `-f docker-compose.override.yml` после остальных файлов.
+
 ## SSL на Localhost
 
 В папке `volumes/certs` сгенерировать SSL ключ для нужного домена:

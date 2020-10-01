@@ -1,13 +1,8 @@
-# Project folders and files to ignore
-vendor
-node_modules
-bower_components
-
 # Numerous always-ignore extensions
 *.diff
 *.err
 *.orig
-*.log*
+*.log
 *.rej
 *.swo
 *.swp
@@ -17,11 +12,7 @@ bower_components
 *.lock
 !**/yarn.lock
 !**/composer.lock
-
-# Dotenv
-.env
-.env.*
-!.env.example
+!**/symfony.lock
 
 # OS or Editor folders
 .DS_Store
@@ -36,10 +27,28 @@ nbproject
 *.sublime-project
 *.sublime-workspace
 .idea
+.phpstorm.meta.php
 *.komodoproject
 .komodotools
 .atom
 .vscode
 .directory
 *.sql
-*.tar*
+*.tar
+*.tar.gz
+*.tar.bz
+*.htaccess
+*.htpasswd
+
+# Dotenv
+.env
+.env.*
+!.env.dist
+
+# Dependencies
+vendor
+node_modules
+bower_components
+
+# Project folders and files to ignore
+docker-compose.override.yml
