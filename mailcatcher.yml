@@ -5,6 +5,6 @@ services:
     image: tophfr/mailcatcher:${MAILCATCHER_VER:-0.7.1}
     restart: always
     environment:
-    - VIRTUAL_HOST=${MAILCATCHER_VIRTUAL_HOST:-mail.docker.local}
+      - VIRTUAL_HOST=${MAILCATCHER_VIRTUAL_HOST:-mail.docker.local}
     networks:
-    - localhost
+      - localhost

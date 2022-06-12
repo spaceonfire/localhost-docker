@@ -5,20 +5,20 @@ services:
     image: centos/mysql-57-centos7:latest
     restart: always
     environment:
-    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-mysql}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-mysql}
     volumes:
-    - mysql:/var/lib/mysql/data
+      - mysql:/var/lib/mysql/data
     networks:
-    - localhost
+      - localhost
 
   adminer:
     image: adminer:${ADMINER_VER:-4.7}
     restart: always
     environment:
-    - VIRTUAL_HOST=${ADMINER_VIRTUAL_HOST:-mysql.docker.local}
-    - VIRTUAL_PORT=8080
+      - VIRTUAL_HOST=${ADMINER_VIRTUAL_HOST:-mysql.docker.local}
+      - VIRTUAL_PORT=8080
     networks:
-    - localhost
+      - localhost
 
 volumes:
   mysql:
